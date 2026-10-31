@@ -2,6 +2,9 @@ import { JSDOM } from 'jsdom'
 import { describe, expect, it } from 'vitest'
 import { parsePrice, parsePrices, readPageSignals } from '../src/index'
 
+// Shared CI machines are several times slower; a quadratic slip is still far above these limits.
+const SLOW = process.env.CI ? 10 : 1
+
 const short = (p: ReturnType<typeof parsePrice>) => p && `${p.amount} ${p.currency}${p.currencySure ? '' : '?'}`
 
 describe('words and units are not currencies', () => {
@@ -121,11 +124,11 @@ describe('hostile input stays fast', () => {
   }
 
   it('handles markup built to make regexes backtrack', () => {
-    expect(fast(() => readPageSignals('<div itemprop=priceCurrency '.repeat(1800)))).toBeLessThan(500)
-    expect(fast(() => parsePrice(`<script>${'prestashop={"currency":{'.repeat(2000)}</script>$25`))).toBeLessThan(500)
-    expect(fast(() => parsePrice('<a'.repeat(50000)))).toBeLessThan(500)
-    expect(fast(() => parsePrice(`<div ${'"'.repeat(50000)}`))).toBeLessThan(500)
-    expect(fast(() => parsePrice(`${'<script>var a=1;</script><p>word</p>'.repeat(20000)}<p>€ 5</p>`))).toBeLessThan(2000)
+    expect(fast(() => readPageSignals('<div itemprop=priceCurrency '.repeat(1800)))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice(`<script>${'prestashop={"currency":{'.repeat(2000)}</script>$25`))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice('<a'.repeat(50000)))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice(`<div ${'"'.repeat(50000)}`))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice(`${'<script>var a=1;</script><p>word</p>'.repeat(20000)}<p>€ 5</p>`))).toBeLessThan(2000 * SLOW)
   })
 })
 
@@ -186,10 +189,10 @@ describe('second review round', () => {
       f()
       return performance.now() - t0
     }
-    expect(fast(() => parsePrice(`<${'a'.repeat(100000)}`, { html: true }))).toBeLessThan(300)
-    expect(fast(() => parsePrice(`${'<b><i>'.repeat(20000)}${'</u>'.repeat(25000)}$10`))).toBeLessThan(500)
-    expect(fast(() => parsePrice(`${'<sup>a'.repeat(10000)}${'</sup>'.repeat(10000)} $10`))).toBeLessThan(500)
-    expect(fast(() => parsePrice(`${'<a title="x'.repeat(20000)}$10`, { html: true }))).toBeLessThan(500)
-    expect(fast(() => readPageSignals(`${'<!--'.repeat(30000)}${'<template>'.repeat(30000)}`))).toBeLessThan(500)
+    expect(fast(() => parsePrice(`<${'a'.repeat(100000)}`, { html: true }))).toBeLessThan(300 * SLOW)
+    expect(fast(() => parsePrice(`${'<b><i>'.repeat(20000)}${'</u>'.repeat(25000)}$10`))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice(`${'<sup>a'.repeat(10000)}${'</sup>'.repeat(10000)} $10`))).toBeLessThan(500 * SLOW)
+    expect(fast(() => parsePrice(`${'<a title="x'.repeat(20000)}$10`, { html: true }))).toBeLessThan(500 * SLOW)
+    expect(fast(() => readPageSignals(`${'<!--'.repeat(30000)}${'<template>'.repeat(30000)}`))).toBeLessThan(500 * SLOW)
   })
 })

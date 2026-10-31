@@ -19,7 +19,11 @@ function localeOf(region: string): string {
   return `${max.language}-${max.script ? `${max.script}-` : ''}${region}`
 }
 
-describe('Intl round trip', () => {
+// The strings come from the runtime's own CLDR: an old one (Node 18) writes some currencies
+// differently from the data in this package, so the test needs a recent one.
+const RECENT_CLDR = Number(process.versions.cldr ?? 0) >= 46
+
+describe.skipIf(!RECENT_CLDR)('Intl round trip', () => {
   it('reads back every country\'s own currency, in its own locale, with the country as hint', () => {
     const failures: string[] = []
     let count = 0
