@@ -1,0 +1,57 @@
+<!doctype html>
+<!-- Source of docs/images/header.png and social.png. Render: docs/brand/render.sh -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Inter"; src: url("inter-var.woff2") format("woff2"); font-weight: 100 900; }
+:root { --ink: #1d1d1f; --muted: #55595f; --line: #eadfd2; --orange: #c25400; --mark: #f27a00; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 100vw; height: 100vh; overflow: hidden; }
+body {
+  font-family: Inter, sans-serif; color: var(--ink);
+  background: radial-gradient(120% 140% at 0% 0%, #fff7ec 0%, #fbfaf8 45%, #f6efe7 100%);
+  display: grid; grid-template-columns: 1fr 1.15fr; align-items: center;
+  gap: 4vw; padding: 0 6vw;
+}
+h1 { font-size: 5.2vw; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+h1 span { color: var(--orange); }
+p.lead { font-size: 2.05vw; line-height: 1.35; color: var(--muted); margin-top: 2.2vw; max-width: 30ch; }
+p.facts { font-size: 1.35vw; color: var(--muted); margin-top: 2.6vw; font-weight: 550; }
+p.facts b { color: var(--ink); font-weight: 650; }
+.by { font-size: 1.3vw; font-weight: 650; color: var(--orange); letter-spacing: .02em; margin-bottom: 1.6vw; text-transform: uppercase; }
+.rows { display: grid; gap: 1.15vw; }
+.row { display: grid; grid-template-columns: 1fr 3.2vw 1fr; align-items: center; }
+.in, .out { font: 600 1.75vw/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 1.15vw 1.4vw; border-radius: 0.9vw; white-space: nowrap; }
+.in { background: #fff; border: 1px solid var(--line); box-shadow: 0 0.6vw 1.4vw -0.9vw rgba(60,30,0,.35); }
+.in small { font: 500 1.2vw/1 Inter, sans-serif; color: var(--muted); margin-left: .6vw; }
+.out { background: var(--ink); color: #fff; }
+.out em { font-style: normal; color: #ffb36b; margin-left: .7vw; }
+.arrow { height: 2vw; }
+body.rows-only { grid-template-columns: 1fr; padding: 0 5vw; }
+body.rows-only > div:first-child { display: none; }
+body.rows-only .in, body.rows-only .out { font-size: 3vw; padding: 2vw 2.4vw; border-radius: 1.4vw; }
+body.rows-only .in small { font-size: 2vw; }
+body.rows-only .rows { gap: 2vw; }
+body.rows-only .row { grid-template-columns: 1fr 6vw 1fr; }
+body.rows-only .arrow { height: 3.4vw; }
+.arrow path { fill: none; stroke: var(--mark); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+<div>
+  <div class="by">DontPayFull Labs</div>
+  <h1>Global <span>Price</span> Parser</h1>
+  <p class="lead">Read prices from any country, the way people write them.</p>
+  <p class="facts"><b>TypeScript · Python · PHP</b> · zero dependencies</p>
+</div>
+<div class="rows">
+  <div class="row"><div class="in">1.299,00 €</div><svg class="arrow" viewBox="0 0 40 20"><path d="M6 10 H32 M25 4 L33 10 L25 16"/></svg><div class="out">1299.00<em>EUR</em></div></div>
+  <div class="row"><div class="in">CHF 1'299.–</div><svg class="arrow" viewBox="0 0 40 20"><path d="M6 10 H32 M25 4 L33 10 L25 16"/></svg><div class="out">1299.00<em>CHF</em></div></div>
+  <div class="row"><div class="in">₹1,23,456</div><svg class="arrow" viewBox="0 0 40 20"><path d="M6 10 H32 M25 4 L33 10 L25 16"/></svg><div class="out">123456.00<em>INR</em></div></div>
+  <div class="row"><div class="in">699,-<small>on a .no shop</small></div><svg class="arrow" viewBox="0 0 40 20"><path d="M6 10 H32 M25 4 L33 10 L25 16"/></svg><div class="out">699.00<em>NOK</em></div></div>
+  <div class="row"><div class="in">$25<small>on a .ca shop</small></div><svg class="arrow" viewBox="0 0 40 20"><path d="M6 10 H32 M25 4 L33 10 L25 16"/></svg><div class="out">25.00<em>CAD</em></div></div>
+</div>
+<script>if (location.hash === '#rows') document.body.classList.add('rows-only')</script>
+</body>
+</html>

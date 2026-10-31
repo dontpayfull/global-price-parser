@@ -1,0 +1,10 @@
+# Source archives (GitHub zips, Packagist) keep the three implementations, the shared data
+# and the licenses; development-only files stay out.
+/.github export-ignore
+/docs export-ignore
+/local export-ignore
+/spec export-ignore
+/tests export-ignore
+/php/tests export-ignore
+/python/tests export-ignore
+/vendor/cldr/currencyData.json export-ignore

@@ -1,0 +1,74 @@
+{
+  "name": "global-price-parser",
+  "version": "0.1.0",
+  "description": "Parse prices from text or HTML in any country: exact amount, ISO 4217 currency, and an honest flag when the currency is not certain.",
+  "keywords": [
+    "price",
+    "price-parser",
+    "parse-price",
+    "currency",
+    "currency-parser",
+    "money",
+    "iso-4217",
+    "cldr",
+    "intl",
+    "i18n",
+    "ecommerce",
+    "scraping",
+    "html",
+    "typescript"
+  ],
+  "homepage": "https://www.dontpayfull.com/labs/global-price-parser/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dontpayfull/global-price-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dontpayfull/global-price-parser/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "DontPayFull",
+    "url": "https://www.dontpayfull.com"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "NOTICE"
+  ],
+  "scripts": {
+    "gen": "node scripts/gen-data.mjs",
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "cases": "node scripts/gen-cases.mjs",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0",
+    "jsdom": "^26.1.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}
