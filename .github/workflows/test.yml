@@ -27,7 +27,8 @@ jobs:
       - run: pnpm build
 
   python:
-    runs-on: ubuntu-latest
+    # ubuntu-latest (26.04) has no Python 3.9 build; 3.9 is still the oldest version we support
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python: ['3.9', '3.13']
