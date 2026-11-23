@@ -13,7 +13,7 @@ from .signals import read_page_signals
 from .types import Options, PageSignals, Per, Price, Signal
 
 __all__ = ["parse_price", "parse_prices", "read_page_signals", "Price", "PageSignals", "Signal", "Per"]
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 @dataclass(frozen=True)

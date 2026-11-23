@@ -114,6 +114,15 @@ describe('several prices in a text', () => {
     expect(list('€100 500 03')).toEqual(['100500.03 EUR'])
   })
 
+  it('does not take a number after the decimals as cents (a "20% off" badge next to the price)', () => {
+    expect(list('$249.99 20% Off')).toEqual(['249.99 USD'])
+    expect(list('$249.99 20')).toEqual(['249.99 USD'])
+    expect(list('$119 20% Off')).toEqual(['119.00 USD'])
+    expect(list('$119 20 % off')).toEqual(['119.00 USD'])
+    expect(list('19,99 € 15% Rabatt')).toEqual(['19.99 EUR'])
+    expect(list('€5 99 20% off')).toEqual(['5.99 EUR'])
+  })
+
   it('reads a minus sign one space away', () => {
     expect(list('- 40.99 USD')).toEqual(['-40.99 USD'])
     expect(list('USD - 40.99')).toEqual(['-40.99 USD'])

@@ -1,6 +1,6 @@
 {
   "name": "global-price-parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Parse prices from text or HTML in any country: exact amount, ISO 4217 currency, and an honest flag when the currency is not certain.",
   "keywords": [
     "price",

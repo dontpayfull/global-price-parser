@@ -21,7 +21,9 @@ export interface Found {
 
 // Digits with separators. A space separates thousands only before exactly 3 digits. A price
 // may start with its decimal point (`.99 EUR`, `$.99`).
-const NUMBER = /(?:(?<![\d.,])[.,](?=\d{1,2}(?![\d.,'])))?\d+(?:(?:[.,']|\uE000| (?=\d{3}(?!\d)))\d+)*(?:[.,]-{1,2}(?!\d)| \d{2}(?!\d|[.,]\d))?/g
+// Cents after a space (`€5 99`, a <sup> that lost its markup) only when the number has no
+// decimals yet and is not a percent: in `$249.99 20% off` and `$119 20% off` the 20 is a badge.
+const NUMBER = /(?:(?<![\d.,])[.,](?=\d{1,2}(?![\d.,'])))?\d+(?:(?:[.,']|\uE000| (?=\d{3}(?!\d)))\d+)*(?:[.,]-{1,2}(?!\d)|(?<![.,]\d\d)(?<![.,]\d) \d{2}(?!\d|[.,]\d| ?[%‰]))?/g
 const PERCENT = /^ ?[%‰]/
 const MAX_GAP = 2
 
